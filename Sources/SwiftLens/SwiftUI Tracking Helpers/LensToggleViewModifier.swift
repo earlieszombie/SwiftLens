@@ -37,14 +37,14 @@ public struct LensToggleViewModifier: ViewModifier {
             .onChange(of: value) {newValue in
                 sendToggleNotification(value: newValue)
             }
-            .onReceive(notificationCenter.publisher(for: .simulateToggleChange)) { notif in
+            .lensOnReceive(notificationCenter, .simulateToggleChange) { notif in
                 receivedToggleNotification(notif: notif)
             }
             .accessibilityIdentifier(accessibilityIdentifier)
     }
     
     func sendToggleNotification(value: Bool) {
-        notificationCenter.post(name: .toggleWasChanged,
+        notificationCenter.lensPost(name: .toggleWasChanged,
                                 object: nil,
                                 userInfo: ["id": accessibilityIdentifier,
                                            "value": value])

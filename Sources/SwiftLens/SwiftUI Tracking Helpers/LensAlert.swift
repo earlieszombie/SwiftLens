@@ -210,7 +210,7 @@ private struct DismissOnSimulatedButtonTap: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .onReceive(notificationCenter.publisher(for: .simulateButtonTap)) { notification in
+            .lensOnReceive(notificationCenter, .simulateButtonTap) { notification in
                 guard isPresented,
                       let id = notification.userInfo?["id"] as? String,
                       alertContent.containsView(withID: id) else { return }

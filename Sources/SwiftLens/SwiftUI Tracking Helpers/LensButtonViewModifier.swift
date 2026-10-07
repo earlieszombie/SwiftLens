@@ -52,9 +52,7 @@ public struct LensButtonStyle: PrimitiveButtonStyle {
                 id: accessibilityIdentifier,
                 info: info(for: configuration)
             )
-      //TODO: only add notification if custom flag is set
-     // #if DEBUG
-          .onReceive(notificationCenter.publisher(for: .simulateButtonTap)) { notification in
+          .lensOnReceive(notificationCenter, .simulateButtonTap) { notification in
               if let id = notification.userInfo?["id"] as? String,
                  self.accessibilityIdentifier == id {
                   configuration.trigger()
@@ -64,7 +62,7 @@ public struct LensButtonStyle: PrimitiveButtonStyle {
    }
     
     func sendButtonNotification() {
-        notificationCenter.post(name: .buttonWasTapped,
+        notificationCenter.lensPost(name: .buttonWasTapped,
                                 object: nil,
                                 userInfo: ["id": accessibilityIdentifier])
     }

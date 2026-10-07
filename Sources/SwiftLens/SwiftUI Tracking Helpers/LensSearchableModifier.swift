@@ -34,7 +34,7 @@ struct LensSearchableModifier: ViewModifier {
                     .lensTracked(id: accessibilityIdentifier,
                                  info: ["value" : text])
             )
-            .onReceive(notificationCenter.publisher(for: .simulateTextFieldChange)) { notif in
+            .lensOnReceive(notificationCenter, .simulateTextFieldChange) { notif in
                 receivedTextFieldChange(notif)
             }
     }

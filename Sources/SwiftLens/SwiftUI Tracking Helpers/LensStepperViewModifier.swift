@@ -42,14 +42,14 @@ public struct LensStepperViewModifier<V>: ViewModifier where V: Strideable & Has
             .onChange(of: value) { newValue in
                 sendStepperNotification(value: newValue)
             }
-            .onReceive(notificationCenter.publisher(for: .simulateStepperChange)) { notif in
+            .lensOnReceive(notificationCenter, .simulateStepperChange) { notif in
                 receivedStepperNotification(notif)
             }
             .accessibilityIdentifier(accessibilityIdentifier)
     }
 
     private func sendStepperNotification(value: V) {
-        notificationCenter.post(name: .stepperWasChanged,
+        notificationCenter.lensPost(name: .stepperWasChanged,
                                  object: nil,
                                  userInfo: [
                                     "id": accessibilityIdentifier,

@@ -37,7 +37,7 @@ public struct LensSlider: View {
                 sendSliderNotification(value: internalValue)
             }
         }
-        .onReceive(notificationCenter.publisher(for: .simulateSliderChange)) { notification in
+        .lensOnReceive(notificationCenter, .simulateSliderChange) { notification in
             if let id = notification.userInfo?["id"] as? String,
                self.accessibilityIdentifier == id,
                let value = notification.userInfo?["value"] as? Double {
@@ -52,7 +52,7 @@ public struct LensSlider: View {
     }
     
     private func sendSliderNotification(value: Double) {
-        notificationCenter.post(name: .sliderWasChanged,
+        notificationCenter.lensPost(name: .sliderWasChanged,
                                 object: nil,
                                 userInfo: ["id": accessibilityIdentifier,
                                            "value": value])

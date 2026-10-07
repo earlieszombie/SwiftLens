@@ -82,14 +82,14 @@ public struct LensPickerViewModifier<V>: ViewModifier where V: Hashable {
             .onChange(of: selection) { newValue in
                 sendPickerNotification(value: newValue)
             }
-            .onReceive(notificationCenter.publisher(for: .simulatePickerChange)) { notif in
+            .lensOnReceive(notificationCenter, .simulatePickerChange) { notif in
                 receivedPickerNotification(notif)
             }
             .accessibilityIdentifier(accessibilityIdentifier)
     }
 
     private func sendPickerNotification(value: V) {
-        notificationCenter.post(name: .pickerWasChanged,
+        notificationCenter.lensPost(name: .pickerWasChanged,
                                  object: nil,
                                  userInfo: [
                                     "id": accessibilityIdentifier,

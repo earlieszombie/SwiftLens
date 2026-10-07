@@ -63,10 +63,10 @@ public struct LensTextFieldViewModifier: ViewModifier {
             .onChange(of: isFocused) { newValue in
                 sendTextFieldFocusChange(value: newValue)
             }
-            .onReceive(notificationCenter.publisher(for: .simulateTextFieldChange)) { notif in
+            .lensOnReceive(notificationCenter, .simulateTextFieldChange) { notif in
                 receivedTextFieldChange(notif)
             }
-            .onReceive(notificationCenter.publisher(for: .simulateTextFieldFocusChange)) { notif in
+            .lensOnReceive(notificationCenter, .simulateTextFieldFocusChange) { notif in
                 receivedTextFieldCommit(notif)
             }
             .accessibilityIdentifier(accessibilityIdentifier)
@@ -79,7 +79,7 @@ public struct LensTextFieldViewModifier: ViewModifier {
     }
 
     private func sendTextFieldChange(value: String) {
-        notificationCenter.post(name: .textFieldWasChanged,
+        notificationCenter.lensPost(name: .textFieldWasChanged,
                                  object: nil,
                                  userInfo: [
                                     "id": accessibilityIdentifier,
@@ -88,7 +88,7 @@ public struct LensTextFieldViewModifier: ViewModifier {
     }
     
     private func sendTextFieldFocusChange(value: Bool) {
-        notificationCenter.post(name: .textFieldFocusChanged,
+        notificationCenter.lensPost(name: .textFieldFocusChanged,
                                  object: nil,
                                  userInfo: [
                                     "id": accessibilityIdentifier,
@@ -98,7 +98,7 @@ public struct LensTextFieldViewModifier: ViewModifier {
     }
     
     private func sendTextFieldCommitChange(value: Bool) {
-        notificationCenter.post(name: .textFieldCommitChanged,
+        notificationCenter.lensPost(name: .textFieldCommitChanged,
                                  object: nil,
                                  userInfo: [
                                     "id": accessibilityIdentifier,
